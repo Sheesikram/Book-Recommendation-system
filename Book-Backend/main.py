@@ -31,6 +31,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Include routers from backend
+from backend.books import router as books_router
+app.include_router(books_router)
+
 # =====================================================
 #  Helper: get similar books
 # =====================================================
@@ -60,6 +64,7 @@ def get_recommendations(book_id, n=10):
         recommendations.append({
             "book_id": int(row["book_id"]),
             "title": row["title"],
+            "original_title": row["original_title"],
             "authors": row["authors"],
             "year": int(row["original_publication_year"]),
             "rating": float(row["average_rating"]),

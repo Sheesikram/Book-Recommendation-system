@@ -5,7 +5,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.neighbors import NearestNeighbors
 import joblib
 
-DATA_PATH = "books.csv"
+DATA_PATH = "./books.csv"
 
 print("Loading dataset...")
 df = pd.read_csv(DATA_PATH)
@@ -14,6 +14,7 @@ df = pd.read_csv(DATA_PATH)
 required_cols = [
     "book_id",
     "title",
+    "original_title",
     "authors",
     "original_publication_year",
     "average_rating",
