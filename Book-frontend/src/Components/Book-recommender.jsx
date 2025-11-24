@@ -16,7 +16,7 @@ function Card({ book }) {
       onKeyDown={(e) => { if (e.key === 'Enter') go(); }}
       role="button"
       tabIndex={0}
-      className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col h-96 w-48 cursor-pointer"
+      className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col h-80 w-48 cursor-pointer"
     >
       <img
         src={book.image_url || "https://via.placeholder.com/150"}
@@ -24,7 +24,7 @@ function Card({ book }) {
         className="w-full h-48 object-cover"
       />
 
-      <div className="p-4 flex-1 flex flex-col justify-center">
+      <div className="px-4 flex-1 flex flex-col justify-center">
         <h3 className="text-lg font-semibold mb-1 truncate">{book.original_title || book.title}</h3>
         <p className="text-gray-600 mb-2 text-sm overflow-hidden">{book.authors}</p>
         <p className="text-yellow-500 font-bold">Rating: {book.average_rating}</p>
