@@ -22,3 +22,21 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Environment files
+.env
+.env.*.local
+
+# Build / cache
+build/
+.cache/
+.parcel-cache/
+.vite/
+coverage/
+
+# OS files
+Thumbs.db
+
+# Package manager lock files (optional to ignore if you don't want them tracked)
+# package-lock.json
+# yarn.lock
