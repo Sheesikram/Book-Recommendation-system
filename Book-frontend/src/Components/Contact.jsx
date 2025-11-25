@@ -67,7 +67,7 @@ const Contact = () => {
                         <button type="submit" className="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition">
                             Send Message
                         </button>
-                        <div className="text-sm text-gray-500">Or email us at <a className="text-blue-600" href="mailto:hello@bookhub.example">hello@bookhub.example</a></div>
+                        <div className="text-sm text-gray-500">Or email us at <a className="text-blue-600" href="mailto:hello@bookhub.example">hello@bookhub.com</a></div>
                     </div>
                 </form>
             </div>
