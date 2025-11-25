@@ -10,7 +10,7 @@ def fetch_books():
         dbname="Books-recommendation-system",
         user="postgres",
         password="Strong123",
-        host="localhost",  # or your host
+        host="localhost",
         port="5432"
     )
     cursor = conn.cursor()

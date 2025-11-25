@@ -53,7 +53,49 @@ const BookDetails = () => {
         }
     }, [id, location.state])
 
-    if (loading) return <div className="p-6">Loading...</div>
+    if (loading) {
+        return (
+            <div className="min-h-s screen bg-gray-50 p-4 md:p-6" role="status" aria-busy="true">
+                <div className="max-w-6xl mx-auto animate-pulse">
+                    <div className="mb-4">
+                        <div className="h-8 w-28 bg-gray-200 rounded" />
+                    </div>
+
+                    <div className="flex flex-col md:flex-row gap-6 bg-white shadow rounded p-4 md:p-6 mb-6">
+                        <div className="w-full md:w-auto flex justify-center md:justify-start">
+                            <div className="w-40 md:w-48 h-64 bg-gray-200 rounded-lg" />
+                        </div>
+
+                        <div className="flex-1 space-y-4 py-2">
+                            <div className="h-8 bg-gray-200 rounded w-3/4" />
+                            <div className="h-4 bg-gray-200 rounded w-full" />
+                            <div className="h-4 bg-gray-200 rounded w-1/2" />
+
+                            <div className="space-y-3 mt-6">
+                                <div className="h-4 bg-gray-200 rounded w-full" />
+                                <div className="h-4 bg-gray-200 rounded w-5/6" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="mt-8">
+                        <div className="h-6 bg-gray-200 rounded w-48 mb-4" />
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
+                            {Array.from({ length: 10 }).map((_, i) => (
+                                <div key={`skeleton-rec-${i}`} className="bg-white shadow rounded overflow-hidden">
+                                    <div className="w-full h-40 bg-gray-200" />
+                                    <div className="p-2 space-y-2">
+                                        <div className="h-4 bg-gray-200 rounded w-full" />
+                                        <div className="h-3 bg-gray-200 rounded w-3/4" />
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
     if (error) return <div className="p-6 text-red-600">{error}</div>
 
     return (

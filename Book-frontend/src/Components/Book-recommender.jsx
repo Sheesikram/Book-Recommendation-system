@@ -87,10 +87,10 @@ const BookList = () => {
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 md:gap-6 p-2 sm:p-4 justify-items-center">
           {books.length === 0 && (
             <>
-              {Array.from({ length: 8 }).map((_, i) => (
+              {Array.from({ length: 16 }).map((_, i) => (
                 <div
                   key={`skeleton-${i}`}
-                  className="bg-white shadow-lg rounded-lg overflow-hidden animate-pulse flex flex-col h-80 w-44 sm:w-48"
+                  className="bg-white shadow-lg rounded-lg overflow-hidden animate-pulse flex flex-col h-80 w-full"
                 >
                   <div className="w-full h-40 sm:h-48 bg-gray-200"></div>
                   <div className="p-3 sm:p-4 flex-1">
