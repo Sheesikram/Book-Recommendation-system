@@ -1,14 +1,20 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { BookRecommender, BookDetails } from './Components'
+import { BookRecommender, BookDetails, Navbar, About, Contact } from './Components'
+import { SearchProvider } from './context/SearchContext'
 
 const App = () => {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<BookRecommender />} />
-        <Route path="/book/:id" element={<BookDetails />} />
-      </Routes>
+      <SearchProvider>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<BookRecommender />} />
+          <Route path="/book/:id" element={<BookDetails />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+      </SearchProvider>
     </BrowserRouter>
   )
 }

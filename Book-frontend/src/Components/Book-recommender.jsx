@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
+import { useSearch } from '../context/SearchContext';
 
 function Card({ book }) {
   const navigate = useNavigate();
@@ -16,18 +17,18 @@ function Card({ book }) {
       onKeyDown={(e) => { if (e.key === 'Enter') go(); }}
       role="button"
       tabIndex={0}
-      className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col h-80 w-48 cursor-pointer"
+      className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col md:h-80  w-44 md:w-full cursor-pointer"
     >
       <img
-        src={book.image_url || "https://via.placeholder.com/150"}
+        src={book.image_url || book.small_image_url || "https://via.placeholder.com/150"}
         alt={book.title}
         className="w-full h-48 object-cover"
       />
 
-      <div className="px-4 flex-1 flex flex-col justify-center">
-        <h3 className="text-lg font-semibold mb-1 truncate">{book.original_title || book.title}</h3>
-        <p className="text-gray-600 mb-2 text-sm overflow-hidden">{book.authors}</p>
-        <p className="text-yellow-500 font-bold">Rating: {book.average_rating}</p>
+      <div className="px-3 sm:px-4 py-3 flex-1 flex flex-col justify-center">
+        <h3 className="text-sm sm:text-lg font-semibold mb-1 truncate" title={book.original_title || book.title}>{book.original_title || book.title}</h3>
+        <p className="text-gray-600 mb-2 text-xs sm:text-sm overflow-hidden" title={book.authors}>{book.authors}</p>
+        <p className="text-yellow-500 font-bold text-xs sm:text-base">⭐ {book.average_rating}</p>
       </div>
     </div>
   )
@@ -36,9 +37,9 @@ function Card({ book }) {
 const BookList = () => {
   const [books, setBooks] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const ITEMS_PER_PAGE = 56;
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filteredBooks, setFilteredBooks] = useState(null); // null = no search applied
+  const ITEMS_PER_PAGE = 55;
+  const { searchQuery } = useSearch();
+  const [filteredBooks, setFilteredBooks] = useState(null);
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -76,48 +77,26 @@ const BookList = () => {
   }, [searchQuery, books]);
 
   const clearSearch = () => {
-    setSearchQuery("");
-    setFilteredBooks(null);
     setCurrentPage(1);
   };
 
   return (
-    <div>
-      {/* Search bar (top center) */}
-      <div className="flex justify-center my-4">
-        <div className="flex items-center space-x-2">
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search by title or author"
-            className="px-3 py-2 border rounded-md w-96 focus:outline-none"
-            aria-label="Search books by title or author"
-          />
-          <button
-            onClick={clearSearch}
-            className="px-3 py-2 bg-gray-200 rounded-md ml-2"
-            aria-label="Clear search"
-          >
-            Clear
-          </button>
-        </div>
-      </div>
-
+    <div className="min-h-screen bg-gray-50">
+      {/* Search bar moved to Navbar */}
       <ul className="my-5">
-        <div className="flex justify-center rounded-4xl flex-wrap gap-6 p-4">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 md:gap-6 p-2 sm:p-4 justify-items-center">
           {books.length === 0 && (
             <>
               {Array.from({ length: 8 }).map((_, i) => (
                 <div
                   key={`skeleton-${i}`}
-                  className="bg-white shadow-lg rounded-lg overflow-hidden animate-pulse flex flex-col h-96 w-48"
+                  className="bg-white shadow-lg rounded-lg overflow-hidden animate-pulse flex flex-col h-80 w-44 sm:w-48"
                 >
-                  <div className="w-full h-48 bg-gray-200"></div>
-                  <div className="p-4 flex-1">
-                    <div className="h-6 bg-gray-200 rounded mb-2 w-3/4" />
-                    <div className="h-4 bg-gray-200 rounded mb-2 w-1/2" />
-                    <div className="h-4 bg-gray-200 rounded w-1/3 mt-auto" />
+                  <div className="w-full h-40 sm:h-48 bg-gray-200"></div>
+                  <div className="p-3 sm:p-4 flex-1">
+                    <div className="h-5 sm:h-6 bg-gray-200 rounded mb-2 w-3/4" />
+                    <div className="h-3 sm:h-4 bg-gray-200 rounded mb-2 w-1/2" />
+                    <div className="h-3 sm:h-4 bg-gray-200 rounded w-1/3 mt-auto" />
                   </div>
                 </div>
               ))}
@@ -125,7 +104,7 @@ const BookList = () => {
           )}
 
           {books.length > 0 && displayedBooks.length === 0 && (
-            <div className="w-full text-center text-gray-600 mb-4">No results found for "{searchQuery}"</div>
+            <div className="w-full text-center text-gray-600 mb-4 col-span-full py-8">No results found for "<span className="font-semibold">{searchQuery}</span>"</div>
           )}
 
           {displayedBooks
@@ -136,17 +115,17 @@ const BookList = () => {
         </div>
         {/* Pagination controls */}
         {displayedBooks.length > ITEMS_PER_PAGE && (
-          <div className="flex items-center justify-center space-x-3 mt-6">
+            <div className="flex items-center justify-center flex-wrap gap-2 mt-8 px-4">
             <button
               onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
               disabled={currentPage === 1}
-              className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50"
+              className="px-3 py-2 rounded bg-gray-300 text-gray-800 disabled:opacity-60 hover:bg-gray-400 transition text-sm"
               aria-label="Previous page"
             >
-              Prev
+              ← Prev
             </button>
 
-            <div className="flex items-center space-x-1">
+            <div className="flex items-center flex-wrap gap-1 sm:gap-2">
               {Array.from({ length: Math.ceil(displayedBooks.length / ITEMS_PER_PAGE) }).map((_, i) => {
                 const page = i + 1;
                 // show only nearby pages to avoid huge lists
@@ -154,7 +133,7 @@ const BookList = () => {
                   // Render ellipsis for gaps
                   if (page === currentPage - 5 || page === currentPage + 5) {
                     return (
-                      <span key={`dots-${page}`} className="px-2">
+                      <span key={`dots-${page}`} className="px-1 text-gray-500">
                         ...
                       </span>
                     );
@@ -166,7 +145,7 @@ const BookList = () => {
                   <button
                     key={page}
                     onClick={() => setCurrentPage(page)}
-                    className={`px-3 py-1 rounded ${page === currentPage ? "bg-blue-600 text-white" : "bg-gray-200"}`}
+                    className={`px-2 sm:px-3 py-1 rounded text-sm transition bg-gray-300 text-gray-800 ${page === currentPage ? 'ring-2 ring-gray-400' : 'hover:bg-gray-400'}`}
                     aria-current={page === currentPage ? "page" : undefined}
                     aria-label={`Page ${page}`}
                   >
@@ -175,14 +154,13 @@ const BookList = () => {
                 );
               })}
             </div>
-
             <button
               onClick={() => setCurrentPage((p) => Math.min(Math.ceil(displayedBooks.length / ITEMS_PER_PAGE), p + 1))}
               disabled={currentPage === Math.ceil(displayedBooks.length / ITEMS_PER_PAGE)}
-              className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50"
+              className="px-3 py-2 rounded bg-gray-300 text-gray-800 disabled:opacity-60 hover:bg-gray-400 transition text-sm"
               aria-label="Next page"
             >
-              Next
+              Next →
             </button>
           </div>
         )}

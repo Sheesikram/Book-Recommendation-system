@@ -14,7 +14,7 @@ def fetch_books():
         port="5432"
     )
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM books LIMIT 400")
+    cursor.execute("SELECT * FROM books LIMIT 1000")
     rows = cursor.fetchall()
     columns = [desc[0] for desc in cursor.description]
     result = [dict(zip(columns, row)) for row in rows]
