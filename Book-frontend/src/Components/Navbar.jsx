@@ -155,7 +155,7 @@ const Navbar = () => {
                     <div className="bg-white w-full max-w-md shadow-2xl p-3 rounded-xl">
                         <div className="flex items-center justify-between">
                             <div className="relative">
-                            <CreativeSearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600 text-lg" />
+                            <HiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600 text-lg" />
                             <input
                                 type="text"
                                 value={searchQuery}
