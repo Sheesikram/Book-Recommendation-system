@@ -76,10 +76,6 @@ const BookList = () => {
     return () => clearTimeout(timer);
   }, [searchQuery, books]);
 
-  const clearSearch = () => {
-    setCurrentPage(1);
-  };
-
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Search bar moved to Navbar */}

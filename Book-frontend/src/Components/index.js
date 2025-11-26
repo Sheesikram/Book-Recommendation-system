@@ -4,6 +4,7 @@ import Navbar from './Navbar';
 import About from './About';
 import Contact from './Contact';
 import Footer from './Footer';
+import Auth from './Auth';
 
 export { 
     BookRecommender,
@@ -11,5 +12,6 @@ export {
     Navbar,
     About,
     Contact,
-    Footer
+    Footer,
+    Auth
 };

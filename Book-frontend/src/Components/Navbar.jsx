@@ -3,14 +3,26 @@ import { Link } from 'react-router-dom'
 import { HiMenu, HiX, HiSearch } from 'react-icons/hi'
 // import CreativeSearchIcon from './CreativeSearchIcon'
 import { useSearch } from '../context/SearchContext'
+import { useAuth } from '../context/AuthContext'
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false)
     const [isSearchOpen, setIsSearchOpen] = useState(false)
     const { searchQuery, setSearchQuery } = useSearch()
+    const { user, signOut, initializing } = useAuth()
+    const displayName = user?.user_metadata?.full_name
+        || user?.user_metadata?.name
+        || user?.user_metadata?.user_name
+        || (user ? 'Reader' : '')
+    const avatarUrl = user?.user_metadata?.avatar_url || user?.user_metadata?.picture
 
     const toggleMenu = () => {
         setIsOpen(!isOpen)
+    }
+
+    const handleSignOut = async () => {
+        await signOut()
+        setIsOpen(false)
     }
 
     const handleClearSearch = () => {
@@ -55,25 +67,65 @@ const Navbar = () => {
                     </div>
 
                     {/* Desktop Menu */}
-                    <div className="hidden md:flex items-center space-x-8">
-                        <Link
-                            to="/"
-                            className="transition-colors font-medium text-sm lg:text-base"
-                        >
-                            Home
-                        </Link>
-                        <Link
-                            to="/about"
-                            className="transition-colors font-medium text-sm lg:text-base"
-                        >
-                            About
-                        </Link>
-                        <Link
-                            to="/contact"
-                            className="transition-colors font-medium text-sm lg:text-base"
-                        >
-                            Contact
-                        </Link>
+                    <div className="hidden md:flex items-center space-x-6">
+                        <div className="flex items-center space-x-6">
+                            <Link
+                                to="/"
+                                className="transition-colors font-medium text-sm lg:text-base"
+                            >
+                                Home
+                            </Link>
+                            <Link
+                                to="/about"
+                                className="transition-colors font-medium text-sm lg:text-base"
+                            >
+                                About
+                            </Link>
+                            <Link
+                                to="/contact"
+                                className="transition-colors font-medium text-sm lg:text-base"
+                            >
+                                Contact
+                            </Link>
+                        </div>
+                        <div className="flex items-center gap-3 border-l border-gray-400 pl-4">
+                            {user ? (
+                                <>
+                                    <div className="flex items-center gap-3">
+                                        {avatarUrl ? (
+                                            <img
+                                                src={avatarUrl}
+                                                alt={`${displayName} avatar`}
+                                                className="w-10 h-10 rounded-full object-cover border border-gray-400"
+                                            />
+                                        ) : (
+                                            <div className="w-10 h-10 rounded-full bg-gray-400 text-white flex items-center justify-center font-semibold">
+                                                {displayName?.[0] ?? 'U'}
+                                            </div>
+                                        )}
+                                        <div className="flex flex-col leading-tight max-w-[12ch]">
+                                            <span className="text-sm font-semibold text-gray-800 truncate">
+                                                {displayName}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <button
+                                        onClick={handleSignOut}
+                                        disabled={initializing}
+                                        className="px-3 py-1 border border-gray-400 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors disabled:opacity-50"
+                                    >
+                                        Sign out
+                                    </button>
+                                </>
+                            ) : (
+                                <Link
+                                    to="/auth"
+                                    className="px-4 py-2 bg-gray-900 text-white rounded-lg font-semibold text-sm hover:bg-gray-700 transition-colors"
+                                >
+                                    Sign in
+                                </Link>
+                            )}
+                        </div>
                     </div>
 
                     {/* Mobile Icons Group - Search & Menu */}
@@ -145,6 +197,23 @@ const Navbar = () => {
                         >
                             Contact
                         </Link>
+                        {user ? (
+                            <button
+                                onClick={handleSignOut}
+                                className="w-full text-left hover:bg-blue-600 px-4 py-2 rounded transition-colors"
+                                disabled={initializing}
+                            >
+                                Sign out
+                            </button>
+                        ) : (
+                            <Link
+                                to="/auth"
+                                className="block bg-gray-900 text-white px-4 py-2 rounded-lg text-center font-semibold transition-colors"
+                                onClick={() => setIsOpen(false)}
+                            >
+                                Sign in
+                            </Link>
+                        )}
                     </div>
                 )}
             </div>

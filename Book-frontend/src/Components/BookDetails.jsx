@@ -51,7 +51,7 @@ const BookDetails = () => {
         return () => {
             mounted = false
         }
-    }, [id, location.state])
+    }, [book, id, location.state])
 
     if (loading) {
         return (
