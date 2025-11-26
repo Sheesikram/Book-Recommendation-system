@@ -44,7 +44,7 @@ const BookList = () => {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/books");
+        const res = await axios.get("https://backend-5hl0.onrender.com/books");
         setBooks(res.data);
       } catch (err) {
         console.error(err);
