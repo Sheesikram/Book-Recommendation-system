@@ -25,7 +25,7 @@ app = FastAPI()
 # Allow frontend (React) to connect
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  
+    allow_origins=["https://book-recommendation-system-9hci.vercel.app/" , "https://book-recommendation-system-9hci-git-main-shees-ikrams-projects.vercel.app/" , "https://book-recommend-pi.vercel.app/" , "*"],  
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
