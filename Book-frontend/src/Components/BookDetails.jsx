@@ -27,7 +27,7 @@ const BookDetails = () => {
                 }
 
                 // Fetch recommendations for this id
-                const recRes = await axios.get(`http://127.0.0.1:8000/recommend/${id}`)
+                const recRes = await axios.get(`https://backend-5hl0.onrender.com/recommend/${id}`)
                 if (!mounted) return
                 const recData = recRes.data
                 const list = Array.isArray(recData)
