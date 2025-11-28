@@ -21,7 +21,7 @@ const BookDetails = () => {
                     if (mounted) setBook(location.state.book)
                 } else if (!book || String(book?.book_id || book?.id) !== String(id)) {
                     // Otherwise fetch list and find the book by id
-                    const res = await axios.get('http://localhost:8000/books')
+                    const res = await axios.get('https://backend-5hl0.onrender.com/books')
                     const found = res.data.find((b) => String(b.book_id) === String(id) || String(b.id) === String(id))
                     if (mounted) setBook(found || { title: 'Unknown', authors: '', image_url: '', book_id: id })
                 }
